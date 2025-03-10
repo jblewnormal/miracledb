@@ -3,21 +3,21 @@ import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 
-import { GithubIcon, GoogleIcon, TwitterIcon } from 'src/assets/icons';
+import { AppleIcon, GoogleIcon, FacebookIcon } from 'src/assets/icons';
 
 // ----------------------------------------------------------------------
 
 type FormSocialsProps = BoxProps & {
   signInWithGoogle?: () => void;
-  singInWithGithub?: () => void;
-  signInWithTwitter?: () => void;
+  signInWithApple?: () => void;
+  singInWithFacebook?: () => void;
 };
 
 export function FormSocials({
   sx,
   signInWithGoogle,
-  singInWithGithub,
-  signInWithTwitter,
+  signInWithApple,
+  singInWithFacebook,
   ...other
 }: FormSocialsProps) {
   return (
@@ -35,11 +35,11 @@ export function FormSocials({
       <IconButton color="inherit" onClick={signInWithGoogle}>
         <GoogleIcon width={22} />
       </IconButton>
-      <IconButton color="inherit" onClick={singInWithGithub}>
-        <GithubIcon width={22} />
+      <IconButton color="inherit" onClick={signInWithApple}>
+        <AppleIcon width={22} />
       </IconButton>
-      <IconButton color="inherit" onClick={signInWithTwitter}>
-        <TwitterIcon width={22} />
+      <IconButton color="inherit" onClick={singInWithFacebook}>
+        <FacebookIcon width={22} />
       </IconButton>
     </Box>
   );

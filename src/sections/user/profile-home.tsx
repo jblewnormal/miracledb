@@ -16,12 +16,9 @@ import CardHeader from '@mui/material/CardHeader';
 
 import { fNumber } from 'src/utils/format-number';
 
-import { _socials } from 'src/_mock';
-import { TwitterIcon, FacebookIcon, LinkedinIcon, InstagramIcon } from 'src/assets/icons';
-
 import { Iconify } from 'src/components/iconify';
 
-import { ProfilePostItem } from './profile-post-item';
+import { ProfilePostItem } from './miracle-item';
 
 // ----------------------------------------------------------------------
 
@@ -146,45 +143,12 @@ export function ProfileHome({ info, posts }: Props) {
     </Card>
   );
 
-  const renderSocials = () => (
-    <Card>
-      <CardHeader title="Social" />
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        {_socials.map((social) => (
-          <Box
-            key={social.label}
-            sx={{
-              gap: 2,
-              display: 'flex',
-              typography: 'body2',
-              wordBreak: 'break-all',
-            }}
-          >
-            {social.value === 'facebook' && <FacebookIcon />}
-            {social.value === 'instagram' && <InstagramIcon />}
-            {social.value === 'linkedin' && <LinkedinIcon />}
-            {social.value === 'twitter' && <TwitterIcon />}
-
-            <Link color="inherit">
-              {social.value === 'facebook' && info.socialLinks.facebook}
-              {social.value === 'instagram' && info.socialLinks.instagram}
-              {social.value === 'linkedin' && info.socialLinks.linkedin}
-              {social.value === 'twitter' && info.socialLinks.twitter}
-            </Link>
-          </Box>
-        ))}
-      </Stack>
-    </Card>
-  );
-
   return (
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, md: 4 }}>
         <Stack spacing={3}>
           {renderFollows()}
           {renderAbout()}
-          {renderSocials()}
         </Stack>
       </Grid>
 

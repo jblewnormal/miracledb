@@ -1,7 +1,5 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Card from '@mui/material/Card';
@@ -12,18 +10,14 @@ import { RouterLink } from 'src/routes/components';
 import { usePathname, useSearchParams } from 'src/routes/hooks';
 
 import { DashboardContent } from 'src/layouts/dashboard';
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from 'src/_mock';
 
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import { useMockedUser } from 'src/auth/hooks';
+import { useAuthContext } from 'src/auth/hooks';
 
 import { ProfileHome } from '../profile-home';
 import { ProfileCover } from '../profile-cover';
-import { ProfileFriends } from '../profile-friends';
-import { ProfileGallery } from '../profile-gallery';
-import { ProfileFollowers } from '../profile-followers';
 
 // ----------------------------------------------------------------------
 
@@ -32,21 +26,6 @@ const NAV_ITEMS = [
     value: '',
     label: 'Profile',
     icon: <Iconify width={24} icon="solar:user-id-bold" />,
-  },
-  {
-    value: 'followers',
-    label: 'Followers',
-    icon: <Iconify width={24} icon="solar:heart-bold" />,
-  },
-  {
-    value: 'friends',
-    label: 'Friends',
-    icon: <Iconify width={24} icon="solar:users-group-rounded-bold" />,
-  },
-  {
-    value: 'gallery',
-    label: 'Gallery',
-    icon: <Iconify width={24} icon="solar:gallery-wide-bold" />,
   },
 ];
 
@@ -59,13 +38,7 @@ export function UserProfileView() {
   const searchParams = useSearchParams();
   const selectedTab = searchParams.get(TAB_PARAM) ?? '';
 
-  const { user } = useMockedUser();
-
-  const [searchFriends, setSearchFriends] = useState('');
-
-  const handleSearchFriends = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchFriends(event.target.value);
-  }, []);
+  const { user } = useAuthContext();
 
   const createRedirectPath = (currentPath: string, query: string) => {
     const queryString = new URLSearchParams({ [TAB_PARAM]: query }).toString();
@@ -119,19 +92,7 @@ export function UserProfileView() {
         </Box>
       </Card>
 
-      {selectedTab === '' && <ProfileHome info={_userAbout} posts={_userFeeds} />}
-
-      {selectedTab === 'followers' && <ProfileFollowers followers={_userFollowers} />}
-
-      {selectedTab === 'friends' && (
-        <ProfileFriends
-          friends={_userFriends}
-          searchFriends={searchFriends}
-          onSearchFriends={handleSearchFriends}
-        />
-      )}
-
-      {selectedTab === 'gallery' && <ProfileGallery gallery={_userGallery} />}
+      {selectedTab === '' && <ProfileHome info={{} as any} posts={[]} />}
     </DashboardContent>
   );
 }

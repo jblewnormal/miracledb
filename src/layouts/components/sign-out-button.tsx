@@ -1,13 +1,10 @@
 import type { ButtonProps } from '@mui/material/Button';
 
 import { useCallback } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '@mui/material/Button';
 
 import { useRouter } from 'src/routes/hooks';
-
-import { CONFIG } from 'src/global-config';
 
 import { toast } from 'src/components/snackbar';
 
@@ -26,8 +23,6 @@ export function SignOutButton({ onClose, sx, ...other }: Props) {
   const router = useRouter();
 
   const { checkUserSession } = useAuthContext();
-
-  const { logout: signOutAuth0 } = useAuth0();
 
   const handleLogout = useCallback(async () => {
     try {

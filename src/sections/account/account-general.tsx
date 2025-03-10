@@ -1,13 +1,11 @@
 import { z as zod } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { isValidPhoneNumber } from 'react-phone-number-input/input';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
@@ -16,7 +14,7 @@ import { fData } from 'src/utils/format-number';
 import { toast } from 'src/components/snackbar';
 import { Form, Field, schemaHelper } from 'src/components/hook-form';
 
-import { useMockedUser } from 'src/auth/hooks';
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -29,16 +27,6 @@ export const UpdateUserSchema = zod.object({
     .min(1, { message: 'Email is required!' })
     .email({ message: 'Email must be a valid email address!' }),
   photoURL: schemaHelper.file({ message: 'Avatar is required!' }),
-  phoneNumber: schemaHelper.phoneNumber({ isValid: isValidPhoneNumber }),
-  country: schemaHelper.nullableInput(zod.string().min(1, { message: 'Country is required!' }), {
-    // message for null value
-    message: 'Country is required!',
-  }),
-  address: zod.string().min(1, { message: 'Address is required!' }),
-  state: zod.string().min(1, { message: 'State is required!' }),
-  city: zod.string().min(1, { message: 'City is required!' }),
-  zipCode: zod.string().min(1, { message: 'Zip code is required!' }),
-  about: zod.string().min(1, { message: 'About is required!' }),
   // Not required
   isPublic: zod.boolean(),
 });
@@ -46,19 +34,12 @@ export const UpdateUserSchema = zod.object({
 // ----------------------------------------------------------------------
 
 export function AccountGeneral() {
-  const { user } = useMockedUser();
+  const { user } = useAuthContext();
 
   const currentUser: UpdateUserSchemaType = {
     displayName: user?.displayName,
     email: user?.email,
     photoURL: user?.photoURL,
-    phoneNumber: user?.phoneNumber,
-    country: user?.country,
-    address: user?.address,
-    state: user?.state,
-    city: user?.city,
-    zipCode: user?.zipCode,
-    about: user?.about,
     isPublic: user?.isPublic,
   };
 
@@ -66,13 +47,6 @@ export function AccountGeneral() {
     displayName: '',
     email: '',
     photoURL: null,
-    phoneNumber: '',
-    country: null,
-    address: '',
-    state: '',
-    city: '',
-    zipCode: '',
-    about: '',
     isPublic: false,
   };
 
@@ -137,9 +111,9 @@ export function AccountGeneral() {
               sx={{ mt: 5 }}
             />
 
-            <Button variant="soft" color="error" sx={{ mt: 3 }}>
+            {/* <Button variant="soft" color="error" sx={{ mt: 3 }}>
               Delete user
-            </Button>
+            </Button> */}
           </Card>
         </Grid>
 
@@ -155,14 +129,6 @@ export function AccountGeneral() {
             >
               <Field.Text name="displayName" label="Name" />
               <Field.Text name="email" label="Email address" />
-              <Field.Phone name="phoneNumber" label="Phone number" />
-              <Field.Text name="address" label="Address" />
-
-              <Field.CountrySelect name="country" label="Country" placeholder="Choose a country" />
-
-              <Field.Text name="state" label="State/region" />
-              <Field.Text name="city" label="City" />
-              <Field.Text name="zipCode" label="Zip/code" />
             </Box>
 
             <Stack spacing={3} sx={{ mt: 3, alignItems: 'flex-end' }}>

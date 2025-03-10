@@ -18,11 +18,6 @@ export const paths = {
   page403: '/error/403',
   page404: '/error/404',
   page500: '/error/500',
-  docs: 'https://docs.minimals.cc',
-  miracle: {
-    root: `/miracle`,
-    details: (title: string) => `/miracle/${kebabCase(title)}`,
-  },
   // AUTH
   auth: {
     signIn: `${ROOTS.AUTH}/sign-in`,
@@ -36,12 +31,14 @@ export const paths = {
     root: ROOTS.DASHBOARD,
     user: {
       root: `${ROOTS.DASHBOARD}/user`,
-      new: `${ROOTS.DASHBOARD}/user/new`,
-      list: `${ROOTS.DASHBOARD}/user/list`,
-      cards: `${ROOTS.DASHBOARD}/user/cards`,
       profile: `${ROOTS.DASHBOARD}/user/profile`,
       account: `${ROOTS.DASHBOARD}/user/account`,
-      edit: (id: string) => `${ROOTS.DASHBOARD}/user/${id}/edit`,
+    },
+    miracle: {
+      root: `${ROOTS.DASHBOARD}/miracle`,
+      new: `${ROOTS.DASHBOARD}/miracle/new`,
+      details: (title: string) => `${ROOTS.DASHBOARD}/miracle/${kebabCase(title)}`,
+      edit: (title: string) => `${ROOTS.DASHBOARD}/miracle/${kebabCase(title)}/edit`,
     },
   },
 };
